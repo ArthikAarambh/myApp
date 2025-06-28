@@ -1,0 +1,4 @@
+{
+  "appPackage": "com.example.myapp",
+  "appActivity": "com.example.myapp.MainActivity"
+}

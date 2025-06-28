@@ -1,0 +1,88 @@
+package tests;
+
+import com.media.net.ui.mobile.android.myDriver;
+import io.appium.java_client.android.AndroidDriver;
+import org.testng.annotations.Test;
+import org.testng.annotations.*;
+import pages.*;
+import org.testng.asserts.SoftAssert;
+
+public class createNotesTest {
+    AndroidDriver driver;;
+    homePage homePage;
+    notePage notePage;
+    SoftAssert softAssert;
+
+    @BeforeClass
+    public void setup() throws Exception {
+        driver = myDriver.myAndroidDriver();;
+        homePage = new homePage(driver);
+        notePage = new notePage(driver);
+    }
+
+    @BeforeMethod
+    public void initSoftAssert() {
+        softAssert = new SoftAssert();
+    }
+
+    @Test(description = "Create a new note and validate title and content")
+    public void createTextNoteAndValidate() {
+        homePage.clickAddNote();
+        notePage.enterTitle("My Test Note");
+        notePage.enterBody("This is a test note content.");
+        notePage.saveNote();
+
+        boolean titlePresent = homePage.isNoteDisplayed("My Test Note");
+        softAssert.assertTrue(titlePresent, "Title should be displayed on home page");
+
+        homePage.openNoteByTitle("My Test Note");
+
+        boolean bodyCorrect = notePage.isNoteBodyUpdated("This is a test note content.");
+        softAssert.assertTrue(bodyCorrect, "Note content should match expected text");
+
+        softAssert.assertAll(); // Don't forget this!
+    }
+    @Test(description = "Create a checklist")
+    public void testCreateChecklist() {
+//        home.clickAddChecklist();
+//        checklist.addItem("Buy milk");
+//        checklist.addItem("Call John");
+//        checklist.saveChecklist();
+//
+//        Assert.assertTrue(home.isChecklistDisplayed("Buy milk"));
+    }
+    @Test(description = "Mark checklist item as complete")
+    public void testMarkTodoAsComplete() {
+//        checklist.selectChecklist("Shopping");
+//        checklist.markItemComplete("Buy milk");
+//
+//        Assert.assertTrue(checklist.isItemChecked("Buy milk"));
+    }
+
+    @Test(description = "Edit and delete note")
+    public void testEditAndDeleteNote() {
+//        home.selectNote("Meeting Notes");
+//        note.editBody("Updated note content");
+//        note.saveNote();
+//
+//        Assert.assertTrue(note.isNoteUpdated("Updated note content"));
+//
+//        note.deleteNote();
+//        Assert.assertFalse(home.isNoteDisplayed("Meeting Notes"));
+    }
+
+    @Test(description = "Validate input restrictions")
+    public void testEmptyNoteValidation() {
+//        home.clickAddNote();
+//        note.enterNoteTitle("");
+//        note.enterNoteBody("");
+//        note.saveNote();
+//
+//        Assert.assertTrue(note.isValidationMessageShown("Title cannot be empty"));
+    }
+
+    @AfterClass
+    public void tearDown() {
+        myDriver.closeApp();
+    }
+}

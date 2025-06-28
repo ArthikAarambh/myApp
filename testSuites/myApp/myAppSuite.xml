@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="myApp Suite">
+    <listeners>
+    </listeners>
+    <test name="Validation of Note App">
+        <classes>
+            <class name="tests.createNotesTest"/>
+<!--            <class name="tests.ChecklistTest"/>-->
+<!--            <class name="tests.ValidationTest"/>-->
+<!--            <class name="tests.EditDeleteTest"/>-->
+        </classes>
+    </test>
+</suite>

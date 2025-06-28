@@ -1,0 +1,9 @@
+{
+  "deviceName": "realme",
+  "udid": "bf80077c",
+  "platformName": "Android",
+  "platformVersion": "14",
+  "automationName": "UiAutomator2",
+  "ignoreHiddenApiPolicyError": true,
+  "noReset": true
+}
