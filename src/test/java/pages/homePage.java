@@ -3,6 +3,9 @@ package pages;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.*;
+
+import java.time.Duration;
 
 public class homePage {
     AndroidDriver driver;
@@ -11,22 +14,38 @@ public class homePage {
         this.driver = driver;
     }
 
-    private By addNoteButton = By.id("add_note_button");
-    private By addChecklistButton = By.id("add_checklist_button");
+    private By createNewNoteButton = By.id("com.example.myapp:id/addNoteFab");
+    private By homePageElement = By.id("android:id/content");
+    private By newTextNote = By.xpath("//android.widget.TextView[@resource-id=\"android:id/text1\" and @text=\"New Text Note\"]");
+    private By newTodoList = By.xpath("//android.widget.TextView[@resource-id=\"android:id/text1\" and @text=\"New Todo List\"]");
 
-    public void clickAddNote() {
-        driver.findElement(addNoteButton).click();
+    public void clickCreateNewNoteButton() {
+        driver.findElement(createNewNoteButton).click();
     }
 
-    public void clickAddChecklist() {
-        driver.findElement(addChecklistButton).click();
+    public void waitForHomeDisplayed() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(homePageElement));
+        System.out.println("Home page loaded");
+        try {
+            Thread.sleep(5000); // 5000 milliseconds = 5 seconds
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
-    public boolean isNoteDisplayed(String noteTitle) {
-        return driver.findElements(By.xpath("//android.widget.TextView[@text='" + noteTitle + "']")).size() > 0;
+    public void clickNewTextNote(){
+        driver.findElement(newTextNote).click();
+    }
+    public void clickNewTodoList(){
+            driver.findElement(newTodoList).click();
     }
 
-    public void openNoteByTitle(String noteTitle) {
-        driver.findElement(By.xpath("//android.widget.TextView[@text='" + noteTitle + "']")).click();
-    }
+//    public void clickAddChecklist() {
+//        driver.findElement(addChecklistButton).click();
+//    }
+//
+//    public void openNoteByTitle(String noteTitle) {
+//        driver.findElement(By.xpath("//android.widget.TextView[@text='" + noteTitle + "']")).click();
+//    }
 }

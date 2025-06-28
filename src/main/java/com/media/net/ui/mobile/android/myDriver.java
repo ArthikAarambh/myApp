@@ -39,12 +39,14 @@ public class myDriver {
                 .setAutomationName(requiredDeviceCaps.getString("automationName"))
                 .setIgnoreHiddenApiPolicyError(requiredDeviceCaps.getBoolean("ignoreHiddenApiPolicyError"))
                 .setNoReset(requiredDeviceCaps.getBoolean("noReset"))
+                .setFullReset(requiredDeviceCaps.getBoolean("fullReset"))
+                .setApp(requiredDeviceCaps.getString("app"))
                 .autoGrantPermissions()
                 .setNewCommandTimeout(Duration.ofMinutes(10));
 
         String serverAddress = "http://" + HOST + ":" + PORT + "/";
         androidDriver = new AndroidDriver(new URL(serverAddress), options);
-        androidDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        androidDriver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         return androidDriver;
     }
 
@@ -56,7 +58,7 @@ public class myDriver {
         }
     }
 
-    public static void closeApp(){
+    public static void quitDriver(){
         androidDriver.quit();
         androidDriver=null;
     }

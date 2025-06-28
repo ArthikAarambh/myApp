@@ -7,6 +7,9 @@ allure generate :- in the root project directory.
 allure generate target/allure-results --clean -o test-report/allure-report
 allure generate allure-results --clean -o test-report/allure-report
 
+working db is note_database.db
+
+
 
 
 

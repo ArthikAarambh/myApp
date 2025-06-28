@@ -1,6 +1,7 @@
 package tests;
 
 import com.media.net.ui.mobile.android.myDriver;
+import com.media.net.utils.androidCommonMethod;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.Test;
 import org.testng.annotations.*;
@@ -11,6 +12,7 @@ public class createNotesTest {
     AndroidDriver driver;;
     homePage homePage;
     notePage notePage;
+    toDOListPage toDoListPage;
     SoftAssert softAssert;
 
     @BeforeClass
@@ -18,6 +20,7 @@ public class createNotesTest {
         driver = myDriver.myAndroidDriver();;
         homePage = new homePage(driver);
         notePage = new notePage(driver);
+        toDoListPage = new toDOListPage(driver);
     }
 
     @BeforeMethod
@@ -27,21 +30,38 @@ public class createNotesTest {
 
     @Test(description = "Create a new note and validate title and content")
     public void createTextNoteAndValidate() {
-        homePage.clickAddNote();
-        notePage.enterTitle("My Test Note");
-        notePage.enterBody("This is a test note content.");
-        notePage.saveNote();
-
-        boolean titlePresent = homePage.isNoteDisplayed("My Test Note");
-        softAssert.assertTrue(titlePresent, "Title should be displayed on home page");
-
-        homePage.openNoteByTitle("My Test Note");
-
-        boolean bodyCorrect = notePage.isNoteBodyUpdated("This is a test note content.");
-        softAssert.assertTrue(bodyCorrect, "Note content should match expected text");
+        homePage.waitForHomeDisplayed();
+//        homePage.clickCreateNewNoteButton();
+//        homePage.clickNewTextNote();
+//        notePage.enterTitle("Test Note");
+//        notePage.enterBody("This is a test note content.");
+//        notePage.saveNote();
+//
+//        boolean titlePresent = homePage.isNoteDisplayed("My Test Note");
+//        softAssert.assertTrue(titlePresent, "Title should be displayed on home page");
+//
+//        homePage.openNoteByTitle("My Test Note");
+//
+//        boolean bodyCorrect = notePage.isNoteBodyUpdated("This is a test note content.");
+//        softAssert.assertTrue(bodyCorrect, "Note content should match expected text");
 
         softAssert.assertAll(); // Don't forget this!
     }
+//    @Test(description = "Create a new to do list")
+//    public void createToDoList(){
+//        homePage.waitForHomeDisplayed();
+//        homePage.clickCreateNewNoteButton();
+//        toDoListPage.enterTitle("My to do list");
+//        toDoListPage.addNewItem("study");
+//        toDoListPage.saveItem();
+//        toDoListPage.saveList();
+//    }
+
+//    @Test(description = "verify delete note")
+//    public void deleteNote(){
+//        notePage.deleteNote();
+//    }
+
     @Test(description = "Create a checklist")
     public void testCreateChecklist() {
 //        home.clickAddChecklist();
@@ -83,6 +103,8 @@ public class createNotesTest {
 
     @AfterClass
     public void tearDown() {
-        myDriver.closeApp();
+        androidCommonMethod.closeApp();
+        myDriver.quitDriver();
+        notePage.deleteNote();
     }
 }

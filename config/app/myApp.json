@@ -1,4 +1,7 @@
 {
   "appPackage": "com.example.myapp",
-  "appActivity": "com.example.myapp.MainActivity"
+  "appActivity": "com.example.myapp.MainActivity",
+  "app": "/Users/aadeshkumar/Desktop/mediaNet/myApp_Automation/config/testData/Apps/app-debug.apk",
+  "noReset": true,
+  "fullReset": false
 }

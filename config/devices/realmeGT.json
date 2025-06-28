@@ -4,6 +4,5 @@
   "platformName": "Android",
   "platformVersion": "14",
   "automationName": "UiAutomator2",
-  "ignoreHiddenApiPolicyError": true,
-  "noReset": true
+  "ignoreHiddenApiPolicyError": true
 }
