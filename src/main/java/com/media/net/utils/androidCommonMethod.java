@@ -17,7 +17,7 @@ public class androidCommonMethod {
     }
     public static void closeApp(){
         try {
-            String appPackage = myDriver.getPlatformCapabilities().getString("appPackage");
+            String appPackage = myDriver.getPlatformCapabilities().getString("appPackage").toString();
             Runtime.getRuntime().exec("adb shell am force-stop "+appPackage);
             Thread.sleep(2000);
         }catch (Exception e){

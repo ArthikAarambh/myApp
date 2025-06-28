@@ -402,53 +402,53 @@ public class SQLiteNoteManager {
 }
 
 // Usage Example Class
-class SQLiteNoteManagerExample {
-    public static void main(String[] args) {
-        // Initialize the manager
-        SQLiteNoteManager noteManager = new SQLiteNoteManager("com.example.myapp", "note_database");
-
-        try {
-            // Example 1: Get all notes
-            System.out.println("=== All Notes ===");
-            List<String> notes = noteManager.getAllNotes();
-            for (String note : notes) {
-                System.out.println(note);
-            }
-
-            // Example 2: Delete note by ID
-            System.out.println("\n=== Deleting Note by ID ===");
-            boolean success = noteManager.deleteNoteById(3);
-            if (success) {
-                System.out.println("Note deleted successfully!");
-            } else {
-                System.out.println("Failed to delete note!");
-            }
-
-            // Example 3: Delete note by name
-            System.out.println("\n=== Deleting Note by Name ===");
-            success = noteManager.deleteNoteByName("Test Note");
-            if (success) {
-                System.out.println("Note deleted successfully!");
-            } else {
-                System.out.println("Failed to delete note!");
-            }
-
-            // Example 4: Delete multiple notes by IDs
-            System.out.println("\n=== Deleting Multiple Notes ===");
-            List<Integer> idsToDelete = new ArrayList<>();
-            idsToDelete.add(1);
-            idsToDelete.add(2);
-
-            success = noteManager.deleteNotesByIds(idsToDelete);
-            if (success) {
-                System.out.println("Multiple notes deleted successfully!");
-            } else {
-                System.out.println("Failed to delete multiple notes!");
-            }
-
-        } finally {
-            // Clean up temporary files
-            noteManager.cleanup();
-        }
-    }
-}
+//class SQLiteNoteManagerExample {
+//    public static void main(String[] args) {
+//        // Initialize the manager
+//        SQLiteNoteManager noteManager = new SQLiteNoteManager("com.example.myapp", "note_database");
+//
+//        try {
+//            // Example 1: Get all notes
+//            System.out.println("=== All Notes ===");
+//            List<String> notes = noteManager.getAllNotes();
+//            for (String note : notes) {
+//                System.out.println(note);
+//            }
+//
+//            // Example 2: Delete note by ID
+//            System.out.println("\n=== Deleting Note by ID ===");
+//            boolean success = noteManager.deleteNoteById(3);
+//            if (success) {
+//                System.out.println("Note deleted successfully!");
+//            } else {
+//                System.out.println("Failed to delete note!");
+//            }
+//
+//            // Example 3: Delete note by name
+//            System.out.println("\n=== Deleting Note by Name ===");
+//            success = noteManager.deleteNoteByName("Test Note");
+//            if (success) {
+//                System.out.println("Note deleted successfully!");
+//            } else {
+//                System.out.println("Failed to delete note!");
+//            }
+//
+//            // Example 4: Delete multiple notes by IDs
+//            System.out.println("\n=== Deleting Multiple Notes ===");
+//            List<Integer> idsToDelete = new ArrayList<>();
+//            idsToDelete.add(1);
+//            idsToDelete.add(2);
+//
+//            success = noteManager.deleteNotesByIds(idsToDelete);
+//            if (success) {
+//                System.out.println("Multiple notes deleted successfully!");
+//            } else {
+//                System.out.println("Failed to delete multiple notes!");
+//            }
+//
+//        } finally {
+//            // Clean up temporary files
+//            noteManager.cleanup();
+//        }
+//    }
+//}

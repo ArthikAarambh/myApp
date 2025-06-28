@@ -23,6 +23,7 @@ public class myDriver {
 
         return deviceCaps;
     }
+
     private static AndroidDriver initAndroidDriver() throws MalformedURLException {
         if(androidDriver!=null){
             return androidDriver;

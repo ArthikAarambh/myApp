@@ -1,6 +1,7 @@
 package tests;
 
 import com.media.net.ui.mobile.android.myDriver;
+import com.media.net.utils.AllureUtils;
 import com.media.net.utils.androidCommonMethod;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.Test;
@@ -14,6 +15,7 @@ public class createNotesTest {
     notePage notePage;
     toDOListPage toDoListPage;
     SoftAssert softAssert;
+    private static int count;
 
     @BeforeClass
     public void setup() throws Exception {
@@ -21,21 +23,24 @@ public class createNotesTest {
         homePage = new homePage(driver);
         notePage = new notePage(driver);
         toDoListPage = new toDOListPage(driver);
+        count=0;
     }
 
     @BeforeMethod
     public void initSoftAssert() {
         softAssert = new SoftAssert();
+        count++;
     }
 
-    @Test(description = "Create a new note and validate title and content")
+    @Test(priority = 0, description = "Create a new note and validate title and content",invocationCount = 5)
     public void createTextNoteAndValidate() {
         homePage.waitForHomeDisplayed();
-//        homePage.clickCreateNewNoteButton();
-//        homePage.clickNewTextNote();
-//        notePage.enterTitle("Test Note");
-//        notePage.enterBody("This is a test note content.");
-//        notePage.saveNote();
+        homePage.clickCreateNewNoteButton();
+        homePage.clickNewTextNote();
+        notePage.enterTitle("TestNote_"+count);
+        notePage.enterBody("This is a test note content.");
+        notePage.saveNote();
+        AllureUtils.log("Created User","TestNote_"+count);
 //
 //        boolean titlePresent = homePage.isNoteDisplayed("My Test Note");
 //        softAssert.assertTrue(titlePresent, "Title should be displayed on home page");
@@ -47,6 +52,7 @@ public class createNotesTest {
 
         softAssert.assertAll(); // Don't forget this!
     }
+
 //    @Test(description = "Create a new to do list")
 //    public void createToDoList(){
 //        homePage.waitForHomeDisplayed();
@@ -105,6 +111,5 @@ public class createNotesTest {
     public void tearDown() {
         androidCommonMethod.closeApp();
         myDriver.quitDriver();
-        notePage.deleteNote();
     }
 }

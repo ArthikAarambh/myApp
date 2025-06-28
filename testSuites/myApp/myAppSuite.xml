@@ -5,7 +5,7 @@
     <test name="Validation of Note App">
         <classes>
             <class name="tests.createNotesTest"/>
-<!--            <class name="tests.ChecklistTest"/>-->
+            <class name="tests.editAndDeleteTest"/>
 <!--            <class name="tests.ValidationTest"/>-->
 <!--            <class name="tests.EditDeleteTest"/>-->
         </classes>
