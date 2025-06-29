@@ -7,8 +7,7 @@
             <class name="tests.TestSuiteSetup"/>
             <class name="tests.createNotesTest"/>
             <class name="tests.createListWithChecklist"/>
-            <class name="tests.editAndDeleteTest"/>
-<!--            <class name="tests.EditDeleteTest"/>-->
+            <class name="tests.DeleteTest"/>
         </classes>
     </test>
 </suite>

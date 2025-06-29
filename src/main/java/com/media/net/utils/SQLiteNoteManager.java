@@ -114,6 +114,130 @@ public class SQLiteNoteManager {
 
         return notes;
     }
+    /**
+     * Get all notes from database after deletion operation
+     * This method extracts the database from device and queries all remaining notes
+     * @return List of note information strings after deletion
+     */
+    /**
+     * Get all notes from database after deletion operation
+     * This method extracts the updated database from device and queries all remaining notes
+     * @return List of note information strings after deletion
+     */
+    /**
+     * Get all notes from database after deletion operation
+     * This method extracts the updated database from device and queries all remaining notes
+     * @return List of note information strings after deletion
+     */
+    public List<String> getAllNotesAfterDeletion() {
+        List<String> notes = new ArrayList<>();
+
+        try {
+            System.out.println("📋 Getting all notes after deletion...");
+
+            // Clean up old local files first
+            cleanup();
+
+            // Force WAL checkpoint to ensure all changes are written to main database
+            String checkpointCommand = String.format("adb shell run-as %s sqlite3 databases/%s \"PRAGMA wal_checkpoint(FULL);\"", packageName, databaseName);
+            executeCommand(checkpointCommand);
+
+            // Small delay to ensure database is fully updated
+            Thread.sleep(500);
+
+            // Extract fresh database files from device
+            if (!extractDatabaseFilesAfterDeletion()) {
+                System.err.println("Failed to extract database files for post-deletion query");
+                return notes;
+            }
+
+            // Query all remaining notes from the fresh database
+            String[] queryCommand = {
+                    "sqlite3",
+                    tempDir + File.separator + "note_database.db",
+                    "SELECT noteId, name, content FROM notes;"
+            };
+
+            ProcessBuilder pb = new ProcessBuilder(queryCommand);
+            Process process = pb.start();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                notes.add(line);
+            }
+
+            int exitCode = process.waitFor();
+            reader.close();
+
+            if (exitCode == 0) {
+                System.out.println("✅ Successfully retrieved " + notes.size() + " notes after deletion");
+            } else {
+                System.err.println("❌ Query failed with exit code: " + exitCode);
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error getting notes after deletion: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return notes;
+    }
+
+    /**
+     * Extract database files specifically after deletion operations
+     * This ensures we get the most current state of the database
+     */
+    private boolean extractDatabaseFilesAfterDeletion() {
+        try {
+            System.out.println("📱 Extracting fresh database files after deletion...");
+
+            // Clean up any existing temp files in device
+            String cleanupTempDir = String.format("adb shell run-as %s rm -rf cache/temp", packageName);
+            executeCommand(cleanupTempDir);
+
+            // Create fresh temp directory
+            String createTempDir = String.format("adb shell run-as %s mkdir -p cache/temp", packageName);
+            executeCommand(createTempDir);
+
+            // Copy current database files to temp (force fresh copy)
+            String[] commands = {
+                    String.format("adb shell run-as %s cp databases/%s cache/temp/", packageName, databaseName),
+                    String.format("adb shell run-as %s cp databases/%s-wal cache/temp/ 2>/dev/null || true", packageName, databaseName),
+                    String.format("adb shell run-as %s cp databases/%s-shm cache/temp/ 2>/dev/null || true", packageName, databaseName)
+            };
+
+            for (String command : commands) {
+                executeCommand(command);
+            }
+
+            // Pull fresh files to local machine with different names to avoid conflicts
+            String timestamp = String.valueOf(System.currentTimeMillis());
+            String[] pullCommands = {
+                    String.format("adb shell run-as %s cat cache/temp/%s", packageName, databaseName),
+                    String.format("adb shell run-as %s cat cache/temp/%s-wal 2>/dev/null || echo ''", packageName, databaseName),
+                    String.format("adb shell run-as %s cat cache/temp/%s-shm 2>/dev/null || echo ''", packageName, databaseName)
+            };
+
+            String[] localFiles = {
+                    "note_database.db",
+                    "note_database.db-wal",
+                    "note_database.db-shm"
+            };
+
+            for (int i = 0; i < pullCommands.length; i++) {
+                if (!executeCommandWithOutput(pullCommands[i], tempDir + File.separator + localFiles[i])) {
+                    System.err.println("Failed to pull: " + localFiles[i]);
+                }
+            }
+
+            return true;
+
+        } catch (Exception e) {
+            System.err.println("Error extracting database files after deletion: " + e.getMessage());
+            return false;
+        }
+    }
 
     /**
      * Core method to execute delete operations

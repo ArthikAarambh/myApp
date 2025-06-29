@@ -28,6 +28,14 @@ public class deleteNoteAndList {
         return notes;
     }
 
+    public List<String >getAllNodeAfterDelete(){
+        List<String>  notes = noteManager.getAllNotesAfterDeletion();
+        for (String note : notes) {
+            System.out.println(note);
+        }
+        return notes;
+    }
+
     public void deleteByNoteId(int id){
             System.out.println("\n=== Deleting Note by ID ===");
             boolean success = noteManager.deleteNoteById(id);

@@ -10,7 +10,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-public class editAndDeleteTest {
+public class DeleteTest {
     AndroidDriver driver;;
     homePage homePage;
     notePage notePage;
@@ -48,26 +48,26 @@ public class editAndDeleteTest {
 //        deleteNoteAndList.deleteByNoteId(3);
 //    }
 
-//    @Test(description = "Getting all notes after any deletion",priority = 4)
-//    public void gettingAllNotesAfter(){
-////        deleteNoteAndList.gettingAllNode();
-//        List<String> notes = deleteNoteAndList.gettingAllNode();
-//        for (String note : notes) {
-//            Allure.addAttachment("Note", note);
-//        }
-//    }
+    @Test(description = "Getting all notes after any deletion",priority = 4)
+    public void gettingAllNotesAfter(){
+//        deleteNoteAndList.gettingAllNode();
+        List<String> notes = deleteNoteAndList.getAllNodeAfterDelete();
+        for (String note : notes) {
+            Allure.addAttachment("Note", note);
+        }
+    }
 
-//    @Test(description = "closing the object to get correct deleted data",priority = 3)
-//    public void closing(){
-//        myDriver.quitDriver();
-//        androidCommonMethod.closeApp();
-//        deleteNoteAndList.cleanupDatabase();
-//    }
-
-    @AfterClass
-    public void tearDown() {
+    @Test(description = "closing the object to get correct deleted data",priority = 3)
+    public void closing(){
         myDriver.quitDriver();
         androidCommonMethod.closeApp();
         deleteNoteAndList.cleanupDatabase();
+    }
+
+    @AfterClass
+    public void tearDown() {
+//        myDriver.quitDriver();
+//        androidCommonMethod.closeApp();
+//        deleteNoteAndList.cleanupDatabase();
     }
 }
