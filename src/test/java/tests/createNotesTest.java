@@ -2,7 +2,6 @@ package tests;
 
 import com.media.net.ui.mobile.android.myDriver;
 import com.media.net.utils.AllureUtils;
-import com.media.net.utils.androidCommonMethod;
 import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.Test;
 import org.testng.annotations.*;
@@ -32,7 +31,7 @@ public class createNotesTest {
         count++;
     }
 
-    @Test(priority = 0, description = "Create a new note",invocationCount = 2)
+    @Test(priority = 1, description = "Create a new note",invocationCount = 2)
     public void createTextNoteAndValidate() {
         homePage.waitForHomeDisplayed();
         homePage.clickCreateNewNoteButton();
@@ -47,12 +46,33 @@ public class createNotesTest {
 //
 //        homePage.openNoteByTitle("My Test Note");
 //
-//        boolean bodyCorrect = notePage.isNoteBodyUpdated("This is a test note content.");
-//        softAssert.assertTrue(bodyCorrect, "Note content should match expected text");
+
 
         softAssert.assertAll(); // Don't forget this!
     }
+    @Test(description = "Verify On Ui the Note is Correctly displayed or not",priority = 2)
+    public void verificationOnUI(){
+            boolean titlePresent = notePage.titleShowing();
+            softAssert.assertTrue(titlePresent, "Title should be displayed on home page");
+            boolean bodyCorrect = notePage.contentDisplayed();
+            softAssert.assertTrue(bodyCorrect, "Note content should match expected text");
+            softAssert.assertAll();
+    }
 
+    @Test(description = "Edit a existing note",priority = 3)
+    public void editNote(){
+        notePage.editNote("edit_Test","edit note test content");
+    }
+
+    @Test(description = "Empty field check On Note",priority = 4)
+    public void emptyField(){
+        homePage.waitForHomeDisplayed();
+        homePage.clickCreateNewNoteButton();
+        homePage.clickNewTextNote();
+        notePage.emptycheck();
+        softAssert.assertFalse(homePage.isHomePageDisplayed(), "Title can note be empty content can be");
+        softAssert.assertAll();
+    }
 //    @Test(description = "Create a new to do list")
 //    public void createToDoList(){
 //        homePage.waitForHomeDisplayed();
@@ -67,45 +87,37 @@ public class createNotesTest {
 //    public void deleteNote(){
 //        notePage.deleteNote();
 //    }
+//
+//    @Test(description = "Create a checklist")
+//    public void testCreateChecklist() {
+////        home.clickAddChecklist();
+////        checklist.addItem("Buy milk");
+////        checklist.addItem("Call John");
+////        checklist.saveChecklist();
+////
+////        Assert.assertTrue(home.isChecklistDisplayed("Buy milk"));
+//    }
+//    @Test(description = "Mark checklist item as complete")
+//    public void testMarkTodoAsComplete() {
+////        checklist.selectChecklist("Shopping");
+////        checklist.markItemComplete("Buy milk");
+////
+////        Assert.assertTrue(checklist.isItemChecked("Buy milk"));
+//    }
+//
+//    @Test(description = "Edit and delete note")
+//    public void testEditAndDeleteNote() {
+////        home.selectNote("Meeting Notes");
+////        note.editBody("Updated note content");
+////        note.saveNote();
+////
+////        Assert.assertTrue(note.isNoteUpdated("Updated note content"));
+////
+////        note.deleteNote();
+////        Assert.assertFalse(home.isNoteDisplayed("Meeting Notes"));
+//    }
+//
 
-    @Test(description = "Create a checklist")
-    public void testCreateChecklist() {
-//        home.clickAddChecklist();
-//        checklist.addItem("Buy milk");
-//        checklist.addItem("Call John");
-//        checklist.saveChecklist();
-//
-//        Assert.assertTrue(home.isChecklistDisplayed("Buy milk"));
-    }
-    @Test(description = "Mark checklist item as complete")
-    public void testMarkTodoAsComplete() {
-//        checklist.selectChecklist("Shopping");
-//        checklist.markItemComplete("Buy milk");
-//
-//        Assert.assertTrue(checklist.isItemChecked("Buy milk"));
-    }
-
-    @Test(description = "Edit and delete note")
-    public void testEditAndDeleteNote() {
-//        home.selectNote("Meeting Notes");
-//        note.editBody("Updated note content");
-//        note.saveNote();
-//
-//        Assert.assertTrue(note.isNoteUpdated("Updated note content"));
-//
-//        note.deleteNote();
-//        Assert.assertFalse(home.isNoteDisplayed("Meeting Notes"));
-    }
-
-    @Test(description = "Validate input restrictions")
-    public void testEmptyNoteValidation() {
-//        home.clickAddNote();
-//        note.enterNoteTitle("");
-//        note.enterNoteBody("");
-//        note.saveNote();
-//
-//        Assert.assertTrue(note.isValidationMessageShown("Title cannot be empty"));
-    }
 
     @AfterClass
     public void tearDown() {

@@ -1,5 +1,6 @@
 package pages;
 
+import com.media.net.ui.mobile.android.androidCommonMethod;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
@@ -39,6 +40,13 @@ public class homePage {
     }
     public void clickNewTodoList(){
             driver.findElement(newTodoList).click();
+    }
+
+    public boolean isHomePageDisplayed(){
+        WebElement element = driver.findElement(homePageElement);
+        boolean isDisplay = element.isDisplayed();
+        androidCommonMethod.pressBack();
+        return isDisplay;
     }
 
 //    public void clickAddChecklist() {

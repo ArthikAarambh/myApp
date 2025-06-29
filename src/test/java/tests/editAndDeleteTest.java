@@ -1,6 +1,6 @@
 package tests;
 import com.media.net.ui.mobile.android.myDriver;
-import com.media.net.utils.androidCommonMethod;
+import com.media.net.ui.mobile.android.androidCommonMethod;
 import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Allure;
 import org.testng.annotations.Test;

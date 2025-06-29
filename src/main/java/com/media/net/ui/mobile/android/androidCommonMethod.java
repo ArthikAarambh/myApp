@@ -1,6 +1,5 @@
-package com.media.net.utils;
+package com.media.net.ui.mobile.android;
 
-import com.media.net.ui.mobile.android.myDriver;
 import org.openqa.selenium.WebElement;
 
 public class androidCommonMethod {
@@ -31,5 +30,11 @@ public class androidCommonMethod {
     }
     public static void adbInstall(){
 
+    }
+    public static boolean isElementEditable(WebElement element) {
+        String enabled = element.getAttribute("enabled");
+        String focusable = element.getAttribute("focusable");
+        pressBack();
+        return "true".equals(enabled) && "true".equals(focusable);
     }
 }
