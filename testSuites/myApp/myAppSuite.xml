@@ -4,9 +4,10 @@
     </listeners>
     <test name="Validation of Note App">
         <classes>
+            <class name="tests.TestSuiteSetup"/>
             <class name="tests.createNotesTest"/>
+            <class name="tests.createListWithChecklist"/>
             <class name="tests.editAndDeleteTest"/>
-<!--            <class name="tests.ValidationTest"/>-->
 <!--            <class name="tests.EditDeleteTest"/>-->
         </classes>
     </test>

@@ -8,8 +8,6 @@ import java.util.List;
 public class deleteNoteAndList {
     SQLiteNoteManager noteManager = new SQLiteNoteManager("com.example.myapp", "note_database");
     public void deleteByTitle(String title){
-        try{
-            // Example 3: Delete note by name
             System.out.println("\n=== Deleting Note by Name ===");
             boolean success = noteManager.deleteNoteByName(title);
             if (success) {
@@ -18,30 +16,19 @@ public class deleteNoteAndList {
             } else {
                 AllureUtils.log("failed","Failed to delete note!");
             }
-
-        }finally {
-            // Clean up temporary files
-            noteManager.cleanup();
-        }
-
     }
 
-    public void gettingAllNode(){
-        try{
-            // Example 1: Get all notes
-            System.out.println("=== All Notes ===");
-            List<String> notes = noteManager.getAllNotes();
+    public List<String>  gettingAllNode(){
+        System.out.println("=== All Notes ===");
+        List<String>  notes = noteManager.getAllNotes();
             for (String note : notes) {
-                AllureUtils.log("Notes is ",note);
+//                AllureUtils.log("Notes is ",note);
+                System.out.println(note);
             }
-        }finally {
-            // Clean up temporary files
-            noteManager.cleanup();
-        }
+        return notes;
     }
 
     public void deleteByNoteId(int id){
-        try{
             System.out.println("\n=== Deleting Note by ID ===");
             boolean success = noteManager.deleteNoteById(id);
             if (success) {
@@ -50,10 +37,11 @@ public class deleteNoteAndList {
             } else {
                 AllureUtils.log("failed","Failed to delete note!");
             }
-        }finally {
-            // Clean up temporary files
-            noteManager.cleanup();
-        }
+    }
+
+    public void cleanupDatabase() {
+        // Clean up once at the very end
+        noteManager.cleanup();
     }
 
 }

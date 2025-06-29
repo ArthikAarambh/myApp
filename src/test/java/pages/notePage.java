@@ -28,6 +28,7 @@ public class notePage {
 
     public void saveNote() {
         driver.findElement(saveButton).click();
+        System.out.println("Note created successfully");
     }
 
     public void editBody(String newText) {

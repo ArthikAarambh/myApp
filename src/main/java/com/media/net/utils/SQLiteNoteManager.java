@@ -49,7 +49,7 @@ public class SQLiteNoteManager {
      */
     public boolean deleteNoteByName(String noteName) {
         String deleteQuery = String.format("DELETE FROM notes WHERE name = '%s';", noteName.replace("'", "''"));
-        return executeDeleteOperation(deleteQuery, "name = '" + noteName + "'");
+        return executeDeleteOperation(deleteQuery.toString(), "name = '" + noteName + "'");
     }
 
     /**
@@ -92,7 +92,7 @@ public class SQLiteNoteManager {
             String[] queryCommand = {
                     "sqlite3",
                     tempDir + File.separator + "note_database.db",
-                    "SELECT noteId, name FROM notes;"
+                    "SELECT noteId, name,content FROM notes;"
             };
 
             ProcessBuilder pb = new ProcessBuilder(queryCommand);

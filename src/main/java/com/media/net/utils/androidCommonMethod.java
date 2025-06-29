@@ -19,10 +19,17 @@ public class androidCommonMethod {
         try {
             String appPackage = myDriver.getPlatformCapabilities().getString("appPackage").toString();
             Runtime.getRuntime().exec("adb shell am force-stop "+appPackage);
-            Thread.sleep(2000);
+            Thread.sleep(4000);
         }catch (Exception e){
             throw new RuntimeException();
         }
 //        myDriver.myAndroidDriver().terminateApp(myDriver.getPlatformCapabilities().getString("appPackage"));
+    }
+
+    public static void adbUninstall(){
+
+    }
+    public static void adbInstall(){
+
     }
 }

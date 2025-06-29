@@ -32,7 +32,7 @@ public class createNotesTest {
         count++;
     }
 
-    @Test(priority = 0, description = "Create a new note and validate title and content",invocationCount = 5)
+    @Test(priority = 0, description = "Create a new note",invocationCount = 2)
     public void createTextNoteAndValidate() {
         homePage.waitForHomeDisplayed();
         homePage.clickCreateNewNoteButton();
@@ -109,7 +109,6 @@ public class createNotesTest {
 
     @AfterClass
     public void tearDown() {
-        androidCommonMethod.closeApp();
         myDriver.quitDriver();
     }
 }

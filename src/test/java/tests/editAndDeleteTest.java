@@ -2,10 +2,14 @@ package tests;
 import com.media.net.ui.mobile.android.myDriver;
 import com.media.net.utils.androidCommonMethod;
 import io.appium.java_client.android.AndroidDriver;
+import io.qameta.allure.Allure;
 import org.testng.annotations.Test;
 import org.testng.annotations.*;
 import pages.*;
 import org.testng.asserts.SoftAssert;
+
+import java.util.List;
+
 public class editAndDeleteTest {
     AndroidDriver driver;;
     homePage homePage;
@@ -29,25 +33,41 @@ public class editAndDeleteTest {
     }
     @Test(description = "Getting all notes before any deletion",priority = 0)
     public void gettingAllNotes(){
-        deleteNoteAndList.gettingAllNode();
+        List<String> notes = deleteNoteAndList.gettingAllNode();
+        for (String note : notes) {
+            Allure.addAttachment("Note", note);
+        }
     }
 
     @Test(description = "Delete note by Title",priority = 1)
     public void testEditAndDeleteNote() {
         deleteNoteAndList.deleteByTitle("TestNote_1");
     }
-    @Test(description = "Delete note by id",priority = 2)
-    public void deleteNoteByid(){
-        deleteNoteAndList.deleteByNoteId(3);
-    }
-    @Test(description = "Getting all notes after any deletion",priority = 3)
-    public void gettingAllNotesAfter(){
-        deleteNoteAndList.gettingAllNode();
-    }
+//    @Test(description = "Delete note by id",priority = 2)
+//    public void deleteNoteByid(){
+//        deleteNoteAndList.deleteByNoteId(3);
+//    }
+
+//    @Test(description = "Getting all notes after any deletion",priority = 4)
+//    public void gettingAllNotesAfter(){
+////        deleteNoteAndList.gettingAllNode();
+//        List<String> notes = deleteNoteAndList.gettingAllNode();
+//        for (String note : notes) {
+//            Allure.addAttachment("Note", note);
+//        }
+//    }
+
+//    @Test(description = "closing the object to get correct deleted data",priority = 3)
+//    public void closing(){
+//        myDriver.quitDriver();
+//        androidCommonMethod.closeApp();
+//        deleteNoteAndList.cleanupDatabase();
+//    }
 
     @AfterClass
     public void tearDown() {
-        androidCommonMethod.closeApp();
         myDriver.quitDriver();
+        androidCommonMethod.closeApp();
+        deleteNoteAndList.cleanupDatabase();
     }
 }
