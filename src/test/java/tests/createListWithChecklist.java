@@ -80,15 +80,6 @@ public class createListWithChecklist {
         softAssert.assertFalse(homePage.isHomePageDisplayed(), "Title can note be empty content can be");
         softAssert.assertAll();
     }
-
-//    @Test(description = "all notes & List at last",priority = 1)
-//    public void showAll(){
-////        deleteNoteAndList.gettingAllNode();
-//        List<String> notes = deleteNoteAndList.gettingAllNode();
-//        for (String note : notes) {
-//            Allure.addAttachment("Note", note);
-//        }
-//    }
     @AfterClass
     public void tearDown() {
         myDriver.quitDriver();

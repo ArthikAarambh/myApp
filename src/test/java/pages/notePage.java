@@ -68,14 +68,5 @@ public class notePage {
         enterBody("");
         saveNote();
     }
-
-//    public boolean isNoteBodyUpdated(String expected) {
-//        String actual = driver.findElement(noteBody).getText();
-//        return actual.equals(expected);
-//    }
-//
-//    public boolean isValidationShown(String text) {
-//        return driver.getPageSource().contains(text);
-//    }
 }
 

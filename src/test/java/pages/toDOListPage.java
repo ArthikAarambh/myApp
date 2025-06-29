@@ -87,9 +87,4 @@ public class toDOListPage {
         saveList();
         System.out.println("Field empty check done");
     }
-//    public void editBody(String newText) {
-//        WebElement body = driver.findElement(noteBody);
-//        body.clear();
-//        body.sendKeys(newText);
-//    }
 }

@@ -40,15 +40,7 @@ public class createNotesTest {
         notePage.enterBody("This is a test note content.");
         notePage.saveNote();
         AllureUtils.log("Created User","TestNote_"+count);
-//
-//        boolean titlePresent = homePage.isNoteDisplayed("My Test Note");
-//        softAssert.assertTrue(titlePresent, "Title should be displayed on home page");
-//
-//        homePage.openNoteByTitle("My Test Note");
-//
-
-
-        softAssert.assertAll(); // Don't forget this!
+        softAssert.assertAll();
     }
     @Test(description = "Verify On Ui the Note is Correctly displayed or not",priority = 2)
     public void verificationOnUI(){
@@ -73,51 +65,6 @@ public class createNotesTest {
         softAssert.assertFalse(homePage.isHomePageDisplayed(), "Title can note be empty content can be");
         softAssert.assertAll();
     }
-//    @Test(description = "Create a new to do list")
-//    public void createToDoList(){
-//        homePage.waitForHomeDisplayed();
-//        homePage.clickCreateNewNoteButton();
-//        toDoListPage.enterTitle("My to do list");
-//        toDoListPage.addNewItem("study");
-//        toDoListPage.saveItem();
-//        toDoListPage.saveList();
-//    }
-
-//    @Test(description = "verify delete note")
-//    public void deleteNote(){
-//        notePage.deleteNote();
-//    }
-//
-//    @Test(description = "Create a checklist")
-//    public void testCreateChecklist() {
-////        home.clickAddChecklist();
-////        checklist.addItem("Buy milk");
-////        checklist.addItem("Call John");
-////        checklist.saveChecklist();
-////
-////        Assert.assertTrue(home.isChecklistDisplayed("Buy milk"));
-//    }
-//    @Test(description = "Mark checklist item as complete")
-//    public void testMarkTodoAsComplete() {
-////        checklist.selectChecklist("Shopping");
-////        checklist.markItemComplete("Buy milk");
-////
-////        Assert.assertTrue(checklist.isItemChecked("Buy milk"));
-//    }
-//
-//    @Test(description = "Edit and delete note")
-//    public void testEditAndDeleteNote() {
-////        home.selectNote("Meeting Notes");
-////        note.editBody("Updated note content");
-////        note.saveNote();
-////
-////        Assert.assertTrue(note.isNoteUpdated("Updated note content"));
-////
-////        note.deleteNote();
-////        Assert.assertFalse(home.isNoteDisplayed("Meeting Notes"));
-//    }
-//
-
 
     @AfterClass
     public void tearDown() {

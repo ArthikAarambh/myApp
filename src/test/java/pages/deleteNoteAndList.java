@@ -8,7 +8,6 @@ import java.util.List;
 public class deleteNoteAndList {
     SQLiteNoteManager noteManager = new SQLiteNoteManager("com.example.myapp", "note_database");
     public void deleteByTitle(String title){
-            System.out.println("\n=== Deleting Note by Name ===");
             boolean success = noteManager.deleteNoteByName(title);
             if (success) {
                 String str ="Note having title "+title;
@@ -19,10 +18,8 @@ public class deleteNoteAndList {
     }
 
     public List<String>  gettingAllNode(){
-        System.out.println("=== All Notes ===");
         List<String>  notes = noteManager.getAllNotes();
             for (String note : notes) {
-//                AllureUtils.log("Notes is ",note);
                 System.out.println(note);
             }
         return notes;
@@ -37,7 +34,6 @@ public class deleteNoteAndList {
     }
 
     public void deleteByNoteId(int id){
-            System.out.println("\n=== Deleting Note by ID ===");
             boolean success = noteManager.deleteNoteById(id);
             if (success) {
                 String str ="Note having id "+id;
@@ -48,7 +44,6 @@ public class deleteNoteAndList {
     }
 
     public void cleanupDatabase() {
-        // Clean up once at the very end
         noteManager.cleanup();
     }
 

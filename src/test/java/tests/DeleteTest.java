@@ -43,14 +43,9 @@ public class DeleteTest {
     public void testEditAndDeleteNote() {
         deleteNoteAndList.deleteByTitle("TestNote_1");
     }
-//    @Test(description = "Delete note by id",priority = 2)
-//    public void deleteNoteByid(){
-//        deleteNoteAndList.deleteByNoteId(3);
-//    }
 
     @Test(description = "Getting all notes after any deletion",priority = 4)
     public void gettingAllNotesAfter(){
-//        deleteNoteAndList.gettingAllNode();
         List<String> notes = deleteNoteAndList.getAllNodeAfterDelete();
         for (String note : notes) {
             Allure.addAttachment("Note", note);
@@ -66,8 +61,5 @@ public class DeleteTest {
 
     @AfterClass
     public void tearDown() {
-//        myDriver.quitDriver();
-//        androidCommonMethod.closeApp();
-//        deleteNoteAndList.cleanupDatabase();
     }
 }

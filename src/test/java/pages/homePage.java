@@ -49,11 +49,4 @@ public class homePage {
         return isDisplay;
     }
 
-//    public void clickAddChecklist() {
-//        driver.findElement(addChecklistButton).click();
-//    }
-//
-//    public void openNoteByTitle(String noteTitle) {
-//        driver.findElement(By.xpath("//android.widget.TextView[@text='" + noteTitle + "']")).click();
-//    }
 }

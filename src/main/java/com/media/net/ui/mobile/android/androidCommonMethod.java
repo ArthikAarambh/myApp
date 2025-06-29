@@ -22,7 +22,6 @@ public class androidCommonMethod {
         }catch (Exception e){
             throw new RuntimeException();
         }
-//        myDriver.myAndroidDriver().terminateApp(myDriver.getPlatformCapabilities().getString("appPackage"));
     }
 
     public static void adbUninstall(){

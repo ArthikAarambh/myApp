@@ -7,78 +7,35 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Utility class for managing notes in SQLite database on Android device (non-rooted)
- * Supports deleting notes by ID or name through ADB commands
- */
+
+//  Utility class for managing notes in SQLite database on Android device (non-rooted)
+//  Supports deleting notes by ID or name through ADB commands
+
 public class SQLiteNoteManager {
 
     private final String packageName;
     private final String databaseName;
     private final String tempDir;
 
-    /**
-     * Constructor
-     * @param packageName Android app package name (e.g., "com.example.myapp")
-     * @param databaseName Database file name (e.g., "note_database")
-     */
     public SQLiteNoteManager(String packageName, String databaseName) {
         this.packageName = packageName;
         this.databaseName = databaseName;
-        // Use current working directory instead of system temp for better control
         this.tempDir = System.getProperty("user.dir");
         System.out.println("Working directory: " + this.tempDir);
         System.out.println("Package: " + this.packageName);
         System.out.println("Database: " + this.databaseName);
     }
 
-    /**
-     * Delete note by ID
-     * @param noteId The ID of the note to delete
-     * @return true if deletion was successful, false otherwise
-     */
     public boolean deleteNoteById(int noteId) {
         String deleteQuery = String.format("DELETE FROM notes WHERE noteId = %d;", noteId);
         return executeDeleteOperation(deleteQuery, "noteId = " + noteId);
     }
 
-    /**
-     * Delete note by name
-     * @param noteName The name of the note to delete
-     * @return true if deletion was successful, false otherwise
-     */
     public boolean deleteNoteByName(String noteName) {
         String deleteQuery = String.format("DELETE FROM notes WHERE name = '%s';", noteName.replace("'", "''"));
         return executeDeleteOperation(deleteQuery.toString(), "name = '" + noteName + "'");
     }
 
-    /**
-     * Delete multiple notes by IDs
-     * @param noteIds List of note IDs to delete
-     * @return true if all deletions were successful, false otherwise
-     */
-    public boolean deleteNotesByIds(List<Integer> noteIds) {
-        if (noteIds == null || noteIds.isEmpty()) {
-            System.out.println("No note IDs provided for deletion");
-            return false;
-        }
-
-        StringBuilder deleteQuery = new StringBuilder("DELETE FROM notes WHERE noteId IN (");
-        for (int i = 0; i < noteIds.size(); i++) {
-            deleteQuery.append(noteIds.get(i));
-            if (i < noteIds.size() - 1) {
-                deleteQuery.append(", ");
-            }
-        }
-        deleteQuery.append(");");
-
-        return executeDeleteOperation(deleteQuery.toString(), "noteIds = " + noteIds.toString());
-    }
-
-    /**
-     * Get all notes from database
-     * @return List of note information strings
-     */
     public List<String> getAllNotes() {
         List<String> notes = new ArrayList<>();
 
@@ -114,21 +71,7 @@ public class SQLiteNoteManager {
 
         return notes;
     }
-    /**
-     * Get all notes from database after deletion operation
-     * This method extracts the database from device and queries all remaining notes
-     * @return List of note information strings after deletion
-     */
-    /**
-     * Get all notes from database after deletion operation
-     * This method extracts the updated database from device and queries all remaining notes
-     * @return List of note information strings after deletion
-     */
-    /**
-     * Get all notes from database after deletion operation
-     * This method extracts the updated database from device and queries all remaining notes
-     * @return List of note information strings after deletion
-     */
+
     public List<String> getAllNotesAfterDeletion() {
         List<String> notes = new ArrayList<>();
 
@@ -171,9 +114,9 @@ public class SQLiteNoteManager {
             reader.close();
 
             if (exitCode == 0) {
-                System.out.println("✅ Successfully retrieved " + notes.size() + " notes after deletion");
+                System.out.println("Successfully retrieved " + notes.size() + " notes after deletion");
             } else {
-                System.err.println("❌ Query failed with exit code: " + exitCode);
+                System.err.println("Query failed with exit code: " + exitCode);
             }
 
         } catch (Exception e) {
@@ -184,10 +127,6 @@ public class SQLiteNoteManager {
         return notes;
     }
 
-    /**
-     * Extract database files specifically after deletion operations
-     * This ensures we get the most current state of the database
-     */
     private boolean extractDatabaseFilesAfterDeletion() {
         try {
             System.out.println("📱 Extracting fresh database files after deletion...");
@@ -239,9 +178,6 @@ public class SQLiteNoteManager {
         }
     }
 
-    /**
-     * Core method to execute delete operations
-     */
     private boolean executeDeleteOperation(String deleteQuery, String logInfo) {
         try {
             System.out.println("Starting deletion process for: " + logInfo);
@@ -266,19 +202,16 @@ public class SQLiteNoteManager {
                 return false;
             }
 
-            System.out.println("✅ Successfully deleted note(s): " + logInfo);
+            System.out.println("Successfully deleted note(s): " + logInfo);
             return true;
 
         } catch (Exception e) {
-            System.err.println("❌ Error during deletion process: " + e.getMessage());
+            System.err.println("Error during deletion process: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
 
-    /**
-     * Step 1: Extract database files from device
-     */
     private boolean extractDatabaseFiles() {
         try {
             System.out.println("📱 Extracting database files from device...");
@@ -327,9 +260,6 @@ public class SQLiteNoteManager {
         }
     }
 
-    /**
-     * Step 2: Execute delete query on local database
-     */
     private boolean executeDeleteQuery(String deleteQuery) {
         try {
             System.out.println("🗑️ Executing delete query...");
@@ -358,9 +288,6 @@ public class SQLiteNoteManager {
         }
     }
 
-    /**
-     * Step 3: Push modified database back to device
-     */
     private boolean pushDatabaseBack() {
         try {
             System.out.println("📲 Pushing modified database back to device...");
@@ -386,12 +313,10 @@ public class SQLiteNoteManager {
         }
     }
 
-    /**
-     * Step 4: Clean up and refresh app state
-     */
+
     private boolean cleanupAndRefreshApp() {
         try {
-            System.out.println("🧹 Cleaning up and refreshing app...");
+            System.out.println("Cleaning up and refreshing app");
 
             String[] commands = {
                     String.format("adb shell run-as %s rm databases/%s-wal", packageName, databaseName),
@@ -405,9 +330,6 @@ public class SQLiteNoteManager {
                 executeCommand(command); // Continue even if some cleanup commands fail
             }
 
-            // Optional: Restart the app (commented out as user might want to start manually)
-            // executeCommand(String.format("adb shell am start %s/.MainActivity", packageName));
-
             return true;
 
         } catch (Exception e) {
@@ -416,16 +338,13 @@ public class SQLiteNoteManager {
         }
     }
 
-    /**
-     * Execute ADB command
-     */
     private boolean executeCommand(String command) {
         try {
             System.out.println("Executing: " + command);
 
             ProcessBuilder pb = new ProcessBuilder();
-            pb.command("sh", "-c", command); // Use 'sh' instead of 'bash' for better macOS compatibility
-            pb.directory(new File(tempDir)); // Set working directory
+            pb.command("sh", "-c", command);
+            pb.directory(new File(tempDir));
 
             Process process = pb.start();
 
@@ -460,16 +379,13 @@ public class SQLiteNoteManager {
         }
     }
 
-    /**
-     * Execute command and redirect output to file
-     */
     private boolean executeCommandWithOutput(String command, String outputFile) {
         try {
             System.out.println("Executing with output: " + command + " > " + outputFile);
 
             ProcessBuilder pb = new ProcessBuilder();
-            pb.command("sh", "-c", command); // Use 'sh' for better compatibility
-            pb.directory(new File(tempDir)); // Set working directory
+            pb.command("sh", "-c", command);
+            pb.directory(new File(tempDir));
             pb.redirectOutput(new File(outputFile));
 
             Process process = pb.start();
@@ -500,9 +416,7 @@ public class SQLiteNoteManager {
         }
     }
 
-    /**
-     * Clean up temporary files
-     */
+
     public void cleanup() {
         try {
             String[] tempFiles = {
@@ -524,55 +438,3 @@ public class SQLiteNoteManager {
         }
     }
 }
-
-// Usage Example Class
-//class SQLiteNoteManagerExample {
-//    public static void main(String[] args) {
-//        // Initialize the manager
-//        SQLiteNoteManager noteManager = new SQLiteNoteManager("com.example.myapp", "note_database");
-//
-//        try {
-//            // Example 1: Get all notes
-//            System.out.println("=== All Notes ===");
-//            List<String> notes = noteManager.getAllNotes();
-//            for (String note : notes) {
-//                System.out.println(note);
-//            }
-//
-//            // Example 2: Delete note by ID
-//            System.out.println("\n=== Deleting Note by ID ===");
-//            boolean success = noteManager.deleteNoteById(3);
-//            if (success) {
-//                System.out.println("Note deleted successfully!");
-//            } else {
-//                System.out.println("Failed to delete note!");
-//            }
-//
-//            // Example 3: Delete note by name
-//            System.out.println("\n=== Deleting Note by Name ===");
-//            success = noteManager.deleteNoteByName("Test Note");
-//            if (success) {
-//                System.out.println("Note deleted successfully!");
-//            } else {
-//                System.out.println("Failed to delete note!");
-//            }
-//
-//            // Example 4: Delete multiple notes by IDs
-//            System.out.println("\n=== Deleting Multiple Notes ===");
-//            List<Integer> idsToDelete = new ArrayList<>();
-//            idsToDelete.add(1);
-//            idsToDelete.add(2);
-//
-//            success = noteManager.deleteNotesByIds(idsToDelete);
-//            if (success) {
-//                System.out.println("Multiple notes deleted successfully!");
-//            } else {
-//                System.out.println("Failed to delete multiple notes!");
-//            }
-//
-//        } finally {
-//            // Clean up temporary files
-//            noteManager.cleanup();
-//        }
-//    }
-//}
